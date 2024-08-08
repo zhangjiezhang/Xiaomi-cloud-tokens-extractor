@@ -1,4 +1,4 @@
-name: Xiaomi Tokens Docker Actions
+name: XiaomiTokens
 on:
   workflow_dispatch:
   
