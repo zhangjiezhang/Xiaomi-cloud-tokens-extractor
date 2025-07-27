@@ -1,13 +1,18 @@
-name: Release
+name: 'Build'
 
 on:
   push:
     branches:
+      - master
+      - dev
+  pull_request:
+    branches:
+      - master
       - dev
 
 jobs:
-  release_zip:
-    name: Release zip
+  build_zip:
+    name: Build zip
     runs-on: ubuntu-latest
     steps:
       - name: Download repo
@@ -27,17 +32,8 @@ jobs:
           name: token_extractor.zip
           path: token_extractor.zip
 
-      - name: Upload token_extractor.zip to release
-        uses: svenstaro/upload-release-action@v1-release
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: token_extractor.zip
-          asset_name: token_extractor.zip
-          tag: ${{ github.ref }}
-          overwrite: true
-
-  release_docker_zip:
-    name: Release docker zip
+  build_docker_zip:
+    name: Build Docker zip
     runs-on: ubuntu-latest
     steps:
       - name: Download repo
@@ -59,17 +55,8 @@ jobs:
           name: token_extractor_docker.zip
           path: token_extractor_docker.zip
 
-      - name: Upload token_extractor.zip to release
-        uses: svenstaro/upload-release-action@v1-release
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: token_extractor_docker.zip
-          asset_name: token_extractor_docker.zip
-          tag: ${{ github.ref }}
-          overwrite: true
-
-  release_exe:
-    name: Release exe
+  build_exe:
+    name: Build exe
     runs-on: windows-latest
     steps:
       - name: Download repo
@@ -94,12 +81,3 @@ jobs:
         with:
           name: token_extractor.exe
           path: dist/token_extractor.exe
-
-      - name: Upload token_extractor.exe to release
-        uses: svenstaro/upload-release-action@v1-release
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: dist/token_extractor.exe
-          asset_name: token_extractor.exe
-          tag: ${{ github.ref }}
-          overwrite: true
